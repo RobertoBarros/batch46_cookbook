@@ -18,4 +18,22 @@ class View
     puts "Type the index of the recipe to erase"
     gets.chomp.to_i - 1
   end
+
+  def ask_ingredient
+    puts 'What ingredient do you want import?'
+    gets.chomp
+  end
+
+  def show_recipes_names(recipes_names)
+    recipes_names.each_with_index do |recipe_name, index|
+      puts "#{index + 1} - #{recipe_name}"
+    end
+  end
+
+  def ask_index_to_import
+    puts 'Choose a recipe number to import:'
+    gets.chomp.to_i - 1
+  end
+
+
 end

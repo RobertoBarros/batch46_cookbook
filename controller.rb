@@ -1,5 +1,6 @@
 require_relative 'view'
 require_relative 'recipe'
+require_relative 'parser'
 
 class Controller
   def initialize(cookbook)
@@ -22,6 +23,16 @@ class Controller
   def destroy
     index = @view.ask_index_to_destroy
     @cookbook.destroy(index)
+  end
+
+  def import_recipe
+    ingredient = @view.ask_ingredient
+    parser = Parser.new
+    recipes_names = parser.list_by_ingredient(ingredient)
+    @view.show_recipes_names(recipes_names)
+    index = @view.ask_index_to_import
+    recipe = parser.import(index)
+    @cookbook.add(recipe)
   end
 
 end
