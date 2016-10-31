@@ -24,8 +24,13 @@ class Parser
 
     name = html_doc.search('h3.h1').text
     description = html_doc.search('ul.ingred-list li').map(&:text).map{|i| i.gsub(/\s+/, ' ')}.join(' / ')
+    cook_time = html_doc.search('.recipe-detail.time').text.gsub('Cooks In','').strip
+    difficulty = html_doc.search('.difficulty').text.gsub('Difficulty','').strip
 
-    Recipe.new(name, description)
+    recipe = Recipe.new(name, description)
+    recipe.cook_time = cook_time
+    recipe.difficulty = difficulty
+    return recipe
   end
 
   private

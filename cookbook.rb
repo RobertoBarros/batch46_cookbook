@@ -9,6 +9,11 @@ class Cookbook
   def all
     @recipes
   end
+
+  def list(index)
+    @recipes[index]
+  end
+
   def add(recipe)
     @recipes << recipe
     save
@@ -18,20 +23,25 @@ class Cookbook
     save
   end
 
+  def save
+    CSV.open(@csv, 'wb') do |csv|
+      @recipes.each do |recipe|
+        csv << [recipe.name, recipe.description, recipe.cook_time, recipe.done, recipe.difficulty]
+      end
+    end
+  end
+
   private
 
   def load
     CSV.foreach(@csv) do |row|
-      @recipes << Recipe.new(row[0], row[1])
+      recipe = Recipe.new(row[0], row[1])
+      recipe.cook_time = row[2]
+      recipe.done = (row[3] == 'true')
+      recipe.difficulty = row[4]
+      @recipes << recipe
     end
   end
 
-  def save
-    CSV.open(@csv, 'wb') do |csv|
-      @recipes.each do |recipe|
-        csv << [recipe.name, recipe.description]
-      end
-    end
-  end
 
 end

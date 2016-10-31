@@ -35,4 +35,11 @@ class Controller
     @cookbook.add(recipe)
   end
 
+  def mark_as_done
+    index = @view.ask_index_to_mark_as_done
+    recipe = @cookbook.list(index)
+    recipe.mark_as_done
+    @cookbook.save
+  end
+
 end

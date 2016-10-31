@@ -11,7 +11,8 @@ class View
 
   def list(recipes)
     recipes.each_with_index do |recipe, i|
-      puts "˜˜˜˜˜˜˜˜˜\n\n#{i + 1} - #{recipe.name}: \n\n #{recipe.description}\n\n˜˜˜˜˜˜˜˜˜\n\n"
+      done = recipe.done ? '[X]' : '[ ]'
+      puts "˜˜˜˜˜˜˜˜˜\n\n#{i + 1} #{done} #{recipe.name} (Difficulty: #{recipe.difficulty}) (#{recipe.cook_time}): \n\n #{recipe.description}\n\n˜˜˜˜˜˜˜˜˜\n\n"
     end
   end
   def ask_index_to_destroy
@@ -35,5 +36,9 @@ class View
     gets.chomp.to_i - 1
   end
 
+  def ask_index_to_mark_as_done
+    puts 'Choose a recipe number to mark as done:'
+    gets.chomp.to_i - 1
+  end
 
 end
